@@ -6,22 +6,18 @@ TCP delayed ackとNagleアルゴリズムの相互作用による
 ```
 クライアント                                 サーバー
 
-request_byte_size (512) バイト ----------->
-request_byte_size (512) バイト ----------->
-                               <-----------  reply_byte_size (1448) バイト
+header_byte_size (512) バイト ---->
+body_byte_size   (512) バイト ---->
+                              <---- reply_byte_size (1448) バイト
 
 (スリープusleep_sec秒)
-request_byte_size (512) バイト ----------->
-request_byte_size (512) バイト ----------->
-                               <-----------  reply_byte_size (1448) バイト
-
-
+header_byte_size (512) バイト ---->
+body_byte_size   (512) バイト ---->
+                              <---- reply_byte_size (1448) バイト
 ```
 
-- クライアントはリクエストデータを2回write()する
-- サーバーはリクエストデータを2回読んだらリプライデータを1回write()する
-
-という状況を想定。リクエストデータ2回はたとえばヘッダとデータを想定している。
+- クライアントはheaderとbodyをサーバーに送る。ここではそれぞれでwrite()する。
+- サーバーはheaderとbodyを読んだらreplyを1回write()する
 
 ##
 

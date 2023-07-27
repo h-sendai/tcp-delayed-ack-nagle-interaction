@@ -13,20 +13,25 @@
 #include "readn.h"
 #include "get_num.h"
 
-#define REQUESET_BYTE_DEFAULT  512
-#define REPLY_BYTE_DEFAULT    1448
+#define HEADER_BYTE_DEFAULT  512
+#define BODY_BYTE_DEFAULT    512
+#define REPLY_BYTE_DEFAULT  1448
 
 int debug = 0;
 int set_so_sndbuf_size = 0;
 volatile sig_atomic_t has_usr1 = 0;
 
-int child_proc(int connfd, int request_byte_size, int reply_byte_size, int use_no_delay, int use_quick_ack)
+int child_proc(int connfd, int header_byte_size, int body_byte_size, int reply_byte_size, int use_no_delay, int use_quick_ack)
 {
     int n;
     
-    char *request_buf = malloc(request_byte_size);
-    if (request_buf == NULL) {
+    char *header_buf = malloc(header_byte_size);
+    if (header_buf == NULL) {
         err(1, "malloc for request_buf");
+    }
+    char *body_buf = malloc(body_byte_size);
+    if (body_buf == NULL) {
+        err(1, "malloc for body_buf");
     }
     char *reply_buf = malloc(reply_byte_size);
     if (reply_buf == NULL) {
@@ -49,8 +54,8 @@ int child_proc(int connfd, int request_byte_size, int reply_byte_size, int use_n
 #endif
         }
 
-        /**** read 1st request packet ****/
-        n = readn(connfd, request_buf, request_byte_size);
+        /**** read header packet ****/
+        n = readn(connfd, header_buf, header_byte_size);
         if (n < 0) {
             err(1, "readn");
         }
@@ -58,10 +63,10 @@ int child_proc(int connfd, int request_byte_size, int reply_byte_size, int use_n
             fprintfwt(stderr, "server: read EOF\n");
             exit(0);
         }
-        fprintfwt(stderr, "server: read 1st request packet\n");
+        fprintfwt(stderr, "server: read header packet\n");
 
-        /**** read 2st request packet ****/
-        n = readn(connfd, request_buf, request_byte_size);
+        /**** read body packet ****/
+        n = readn(connfd, body_buf, body_byte_size);
         if (n < 0) {
             err(1, "readn");
         }
@@ -69,7 +74,7 @@ int child_proc(int connfd, int request_byte_size, int reply_byte_size, int use_n
             fprintfwt(stderr, "server: read EOF\n");
             exit(0);
         }
-        fprintfwt(stderr, "server: read 2nd request packet\n");
+        fprintfwt(stderr, "server: read body packet\n");
 
         /**** write reply packet ****/
         n = write(connfd, reply_buf, reply_byte_size);
@@ -99,8 +104,9 @@ int usage(void)
     char *msg =
 "Usage: server\n"
 "-D      use TCP_NODELAY socket option\n"
-"-r N    request byte size (default: 512)\n"
-"-R N    reply byte size   (default: 1024)\n"
+"-H N    header byte size (default: 512)\n"
+"-B N    body byte size   (default: 512)\n"
+"-R N    reply byte size  (default: 1024)\n"
 "-p port port number (1234)\n"
 "-q      enable quick ack\n";
 
@@ -119,32 +125,36 @@ int main(int argc, char *argv[])
 
     int use_no_delay      = 0;
     int use_quick_ack     = 0;
-    int request_byte_size = REQUESET_BYTE_DEFAULT;
+    int header_byte_size  = HEADER_BYTE_DEFAULT;
+    int body_byte_size    = BODY_BYTE_DEFAULT;
     int reply_byte_size   = REPLY_BYTE_DEFAULT;
 
     int c;
-    while ( (c = getopt(argc, argv, "dDhp:qr:R:")) != -1) {
+    while ( (c = getopt(argc, argv, "D:Q:H:B:R:dhp:")) != -1) {
         switch (c) {
-            case 'd':
-                debug += 1;
-                break;
             case 'D':
                 use_no_delay = 1;
+                break;
+            case 'q':
+                use_quick_ack = 1;
+                break;
+            case 'H':
+                header_byte_size = get_num(optarg);
+                break;
+            case 'B':
+                body_byte_size = get_num(optarg);
+                break;
+            case 'R':
+                reply_byte_size = get_num(optarg);
+                break;
+            case 'd':
+                debug += 1;
                 break;
             case 'h':
                 usage();
                 exit(0);
             case 'p':
                 port = strtol(optarg, NULL, 0);
-                break;
-            case 'q':
-                use_quick_ack = 1;
-                break;
-            case 'r':
-                request_byte_size = get_num(optarg);
-                break;
-            case 'R':
-                reply_byte_size = get_num(optarg);
                 break;
             default:
                 break;
@@ -172,7 +182,7 @@ int main(int argc, char *argv[])
             if (close(listenfd) < 0) {
                 err(1, "close listenfd");
             }
-            if (child_proc(connfd, request_byte_size, reply_byte_size, use_no_delay, use_quick_ack) < 0) {
+            if (child_proc(connfd, header_byte_size, body_byte_size, reply_byte_size, use_no_delay, use_quick_ack) < 0) {
                 errx(1, "child_proc");
             }
             exit(0);
