@@ -1,0 +1,15 @@
+10:58:59.802984 client: wrote 1st request data
+10:58:59.803031 client: wrote 2nd data
+10:58:59.803181 client: got reply
+10:59:00.803255 client: wrote 1st request data
+10:59:00.803264 client: wrote 2nd data
+10:59:00.843358 client: got reply
+10:59:01.843430 client: wrote 1st request data
+10:59:01.843440 client: wrote 2nd data
+10:59:01.884350 client: got reply
+10:59:02.884424 client: wrote 1st request data
+10:59:02.884433 client: wrote 2nd data
+10:59:02.925357 client: got reply
+10:59:03.925428 client: wrote 1st request data
+10:59:03.925434 client: wrote 2nd data
+10:59:03.966360 client: got reply
