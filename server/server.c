@@ -54,12 +54,20 @@ int child_proc(int connfd, int request_byte_size, int reply_byte_size, int use_n
         if (n < 0) {
             err(1, "readn");
         }
+        else if (n == 0) {
+            fprintfwt(stderr, "server: read EOF\n");
+            exit(0);
+        }
         fprintfwt(stderr, "server: read 1st request packet\n");
 
         /**** read 2st request packet ****/
         n = readn(connfd, request_buf, request_byte_size);
         if (n < 0) {
             err(1, "readn");
+        }
+        else if (n == 0) {
+            fprintfwt(stderr, "server: read EOF\n");
+            exit(0);
         }
         fprintfwt(stderr, "server: read 2nd request packet\n");
 
