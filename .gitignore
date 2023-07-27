@@ -3,8 +3,8 @@ syntax: glob
 *.o
 *.d
 *~
-server/server
-client/client
-client/client-once
+read-write/server/server
+read-write/client/client
+read-write/client/client-once
 data
 log
