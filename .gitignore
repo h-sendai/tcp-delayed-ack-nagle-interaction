@@ -1,0 +1,10 @@
+syntax: glob
+.depend
+*.o
+*.d
+*~
+server/server
+client/client
+client/client-once
+data
+log
