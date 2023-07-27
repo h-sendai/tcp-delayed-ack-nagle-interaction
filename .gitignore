@@ -6,5 +6,8 @@ syntax: glob
 read-write/server/server
 read-write/client/client
 read-write/client/client-once
+writev/server/server
+writev/client/client
+writev/client/client-once
 data
 log
