@@ -112,6 +112,7 @@ int main(int argc, char *argv[])
 
     for ( ; ; ) {
         /**** header ****/
+        fprintfwt(stderr, "client: will write header\n");
         n = write(sockfd, header_buf, header_byte_size);
         if (n < 0) {
             err(1, "client: write");
@@ -123,6 +124,7 @@ int main(int argc, char *argv[])
         fprintfwt(stderr, "client: wrote header\n");
 
         /**** body ****/
+        fprintfwt(stderr, "client: will write body\n");
         n = write(sockfd, body_buf, body_byte_size);
         if (n < 0) {
             err(1, "client: write");
@@ -134,6 +136,7 @@ int main(int argc, char *argv[])
         fprintfwt(stderr, "client: wrote body\n");
 
         /**** read reply ****/
+        fprintfwt(stderr, "client: will read reply\n");
         n = readn(sockfd, reply_buf, reply_byte_size);
         if (n < 0) {
             errx(1, "readn");
