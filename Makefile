@@ -1,5 +1,5 @@
-SUBDIRS += server
-SUBDIRS += client
+SUBDIRS += read-write
+SUBDIRS += writev
 
 .PHONY: $(SUBDIRS)
 
