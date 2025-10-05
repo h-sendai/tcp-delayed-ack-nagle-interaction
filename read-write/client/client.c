@@ -1,5 +1,6 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
+#include <sys/prctl.h>
 
 #include <err.h>
 #include <errno.h>
@@ -47,6 +48,10 @@ int main(int argc, char *argv[])
     int header_byte_size = HEADER_BYTE_DEFAULT;
     int body_byte_size   = BODY_BYTE_DEFAULT;
     int reply_byte_size  = REPLY_BYTE_DEFEULT;
+
+    if (prctl(PR_SET_TIMERSLACK, 1) < 0) {
+        err(1, "prctl");
+    }
 
     while ( (c = getopt(argc, argv, "D:B:H:R:hp:s:")) != -1) {
         switch (c) {
