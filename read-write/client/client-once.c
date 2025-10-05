@@ -17,6 +17,8 @@
 #define BODY_BYTE_DEFAULT    512
 #define REPLY_BYTE_DEFEULT  1448
 
+int use_quick_ack = 0; /* global var to use in readn.c */
+
 int usage()
 {
     char msg[] = "Usage: client [options] remote_host\n"

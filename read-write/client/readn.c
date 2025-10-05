@@ -1,4 +1,7 @@
 #include "readn.h"
+#include "my_socket.h"
+
+extern int use_quick_ack;
 
 ssize_t						/* Read "n" bytes from a descriptor. */
 readn(int fd, void *vptr, size_t n)
@@ -10,6 +13,13 @@ readn(int fd, void *vptr, size_t n)
 	ptr = vptr;
 	nleft = n;
 	while (nleft > 0) {
+#ifdef __linux__
+        if (use_quick_ack) {
+            if (set_so_quickack(fd) < 0) {
+                exit(1);
+            }
+        }
+#endif
 		if ( (nread = read(fd, ptr, nleft)) < 0) {
 			if (errno == EINTR)
 				nread = 0;		/* and call read() again */

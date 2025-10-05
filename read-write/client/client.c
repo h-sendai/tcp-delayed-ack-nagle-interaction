@@ -18,6 +18,8 @@
 #define BODY_BYTE_DEFAULT    512
 #define REPLY_BYTE_DEFEULT  1448
 
+int use_quick_ack = 0; /* global var to use in readn.c */
+
 int usage()
 {
     char msg[] = "Usage: client [options] remote_host\n"
@@ -53,7 +55,7 @@ int main(int argc, char *argv[])
         err(1, "prctl");
     }
 
-    while ( (c = getopt(argc, argv, "DB:H:R:hp:s:")) != -1) {
+    while ( (c = getopt(argc, argv, "DB:H:R:hp:qs:")) != -1) {
         switch (c) {
             case 'D':
                 use_nodelay = 1;
@@ -73,6 +75,9 @@ int main(int argc, char *argv[])
                 break;
             case 'p':
                 port = strtol(optarg, NULL, 0);
+                break;
+            case 'q':
+                use_quick_ack = 1;
                 break;
             case 's':
                 sleep_usec = strtol(optarg, NULL, 0);
