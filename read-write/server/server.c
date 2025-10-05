@@ -18,6 +18,7 @@
 #define REPLY_BYTE_DEFAULT  1448
 
 int debug = 0;
+int use_quick_ack = 0; /* global var to use in readn.c */
 int set_so_sndbuf_size = 0;
 volatile sig_atomic_t has_usr1 = 0;
 
@@ -43,17 +44,15 @@ int child_proc(int connfd, int header_byte_size, int body_byte_size, int reply_b
         set_so_nodelay(connfd);
     }
 
+    if (use_quick_ack) {
+        fprintfwt(stderr, "use_quick_ack\n");
+        //we have to set_so_quickack() just before read()
+    }
+
     pid_t pid = getpid();
     fprintfwt(stderr, "server: pid: %d\n", pid);
 
     for ( ; ; ) {
-        if (use_quick_ack) {
-#ifdef __linux__
-            int qack = 1;
-            setsockopt(connfd, IPPROTO_TCP, TCP_QUICKACK, &qack, sizeof(qack));
-#endif
-        }
-
         /**** read header packet ****/
         n = readn(connfd, header_buf, header_byte_size);
         if (n < 0) {
@@ -124,7 +123,6 @@ int main(int argc, char *argv[])
     int listenfd;
 
     int use_no_delay      = 0;
-    int use_quick_ack     = 0;
     int header_byte_size  = HEADER_BYTE_DEFAULT;
     int body_byte_size    = BODY_BYTE_DEFAULT;
     int reply_byte_size   = REPLY_BYTE_DEFAULT;
