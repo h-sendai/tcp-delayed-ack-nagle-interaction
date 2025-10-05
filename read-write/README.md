@@ -77,3 +77,20 @@ tcpdumpのログ[tcpdump.txt](tcpdump.txt)
 をみると、2回目以降は11, 17行め, ...のようにサーバー側から
 ackが返るのに40ミリ秒かかっていて、ackを受信後、2個目の
 リクエストデータを送っていることが確認できる。
+
+## -D (nodelay), -q (quick ack)オプション
+
+server, clientともに-D (TCP_NODELAY)オプション、-q (TCP_QUICkACK)オプション
+をつけられるようにしてある。
+
+このシステムの場合、40ミリ秒よけいに時間がかかるのは
+server側で最初の512バイトヘッダを受信したあと、すぐにACKを返さず
+delayed ackモードが使われ、40ミリ秒後にackが帰ることと
+client側が最初のheaderを送信したあとNagleアルゴリズムを使って
+server側からのackを受信するまでbodyを送信しないという
+delayed ackとNagleアルゴリズムの相互作用が生じているからである。
+
+このシステムの場合、40ミリ秒よけいに時間がかかるのを解消するには
+1. クライアント側でheaderとbodyを書くのにwritev()を使う（この上のディレクトリのwritev)
+2. サーバー側でheaderを読んだら即座にackを返すためにquickackを使う(クライアント側はオプションなしに./client remote_hostで起動、サーバ側は./server -qでquickackを使うように起動する(サーバ側でheaderを読んだあとすぐにackを返すようになるので、クライアント側でNagleモードにはいっているのがackの受信で解消され、すぐにbodyを送ることができるようになる)
+3. サーバー側はオプションなしに起動(./server)し、クライアント側はTCP_NODELAYを指定する(./client -D remote_host) (headerとbodyが連続して送信され、サーバー側はheaderとbodyがきたのでリプライを返すことができるようになる)
