@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
     int reply_byte_size   = REPLY_BYTE_DEFAULT;
 
     int c;
-    while ( (c = getopt(argc, argv, "D:Q:H:B:R:dhp:")) != -1) {
+    while ( (c = getopt(argc, argv, "DqH:B:R:dhp:")) != -1) {
         switch (c) {
             case 'D':
                 use_no_delay = 1;
