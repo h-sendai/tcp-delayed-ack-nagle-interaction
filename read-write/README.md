@@ -94,3 +94,22 @@ delayed ackとNagleアルゴリズムの相互作用が生じているからで�
 1. クライアント側でheaderとbodyを書くのにwritev()を使う（この上のディレクトリのwritev)
 2. サーバー側でheaderを読んだら即座にackを返すためにquickackを使う(クライアント側はオプションなしに./client remote_hostで起動、サーバ側は./server -qでquickackを使うように起動する(サーバ側でheaderを読んだあとすぐにackを返すようになるので、クライアント側でNagleモードにはいっているのがackの受信で解消され、すぐにbodyを送ることができるようになる)
 3. サーバー側はオプションなしに起動(./server)し、クライアント側はTCP_NODELAYを指定する(./client -D remote_host) (headerとbodyが連続して送信され、サーバー側はheaderとbodyがきたのでリプライを返すことができるようになる)
+
+## Delayed Ackを有効化するトリガー ???
+
+上の例をみると1回めのheader, body, replyの受け取りはディレイなしに
+終了していて、2回めのheaderを送ったときにサーバー側でdelayed ackが
+発動している。この違いは何だろうかとおもって他プログラムで
+「クライアントが サーバー側に接続したら1秒に1回、512バイトのデータを
+送る（クライアントはふつうに512バイトを読む）」という
+システムを試してみた。クライアントはackをdelayさせることなく応答
+していた。
+
+考えてみると、サーバーはheaderとbodyを受信したあと、replyを
+クライアントに返している。Delayed ackはackをpiggybackできる
+データがあればペイロードを送るついでにackを送る、というもの
+なのでこれが原因かもしれない。
+確認用にclient, serverともに-Nというオプションをつけて
+client側はheader, bodyを送るのみ、server側はheader, bodyを
+読むのみでreplyを返さないというシナリオで動作させてみたら、
+serverがdelayed ackでackを返すということはなかった。
