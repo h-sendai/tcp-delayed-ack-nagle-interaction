@@ -113,3 +113,7 @@ delayed ackとNagleアルゴリズムの相互作用が生じているからで�
 client側はheader, bodyを送るのみ、server側はheader, bodyを
 読むのみでreplyを返さないというシナリオで動作させてみたら、
 serverがdelayed ackでackを返すということはなかった。
+
+データの流れが一方方向であるならdelayed ackの発動条件の
+ひとつは成立しないということだろうか（送られてきたデータを
+あまり読まないのでackを出す間隔が短くなるということはある。）
