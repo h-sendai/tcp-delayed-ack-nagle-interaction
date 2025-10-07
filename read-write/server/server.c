@@ -21,6 +21,7 @@ int debug = 0;
 int use_quick_ack = 0; /* global var to use in readn.c */
 int set_so_sndbuf_size = 0;
 volatile sig_atomic_t has_usr1 = 0;
+int dont_send_read_data = 0;
 
 int child_proc(int connfd, int header_byte_size, int body_byte_size, int reply_byte_size, int use_no_delay, int use_quick_ack)
 {
@@ -75,13 +76,15 @@ int child_proc(int connfd, int header_byte_size, int body_byte_size, int reply_b
         }
         fprintfwt(stderr, "server: read body packet\n");
 
-        /**** write reply packet ****/
-        n = write(connfd, reply_buf, reply_byte_size);
-        if (n < 0) {
-            fprintfwt(stderr, "server: %s\n", strerror(errno));
-            exit(0);
+        if (! dont_send_read_data) {
+            /**** write reply packet ****/
+            n = write(connfd, reply_buf, reply_byte_size);
+            if (n < 0) {
+                fprintfwt(stderr, "server: %s\n", strerror(errno));
+                exit(0);
+            }
+            fprintfwt(stderr, "server: wrote reply packet\n");
         }
-        fprintfwt(stderr, "server: wrote reply packet\n");
     }
 
     return 0;
@@ -107,12 +110,14 @@ int usage(void)
 "-B N    body byte size   (default: 512)\n"
 "-R N    reply byte size  (default: 1024)\n"
 "-p port port number (1234)\n"
+"-N      dont send reply packet.  Use with client -N (dont read reply)\n"
 "-q      enable quick ack\n";
 
     fprintf(stderr, "%s", msg);
 
     return 0;
 }
+
 
 int main(int argc, char *argv[])
 {
@@ -128,7 +133,7 @@ int main(int argc, char *argv[])
     int reply_byte_size   = REPLY_BYTE_DEFAULT;
 
     int c;
-    while ( (c = getopt(argc, argv, "DqH:B:R:dhp:")) != -1) {
+    while ( (c = getopt(argc, argv, "DqH:B:NR:dhp:")) != -1) {
         switch (c) {
             case 'D':
                 use_no_delay = 1;
@@ -153,6 +158,9 @@ int main(int argc, char *argv[])
                 exit(0);
             case 'p':
                 port = strtol(optarg, NULL, 0);
+                break;
+            case 'N':
+                dont_send_read_data = 1;
                 break;
             default:
                 break;

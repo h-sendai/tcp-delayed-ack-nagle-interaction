@@ -32,6 +32,7 @@ int usage()
                  "-B N    body byte size   (default: 512)\n"
                  "-R N    reply byte size  (default: 1448)\n"
                  "-p PORT port number (default: 1234)\n"
+                 "-N      don't read reply (send header and body only) Use with server -N.\n"
                  "-h      display this help\n";
 
     fprintf(stderr, "%s", msg);
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
     int port = 1234;
     int sleep_usec = 1000000;
     int use_nodelay = 0;
+    int dont_read_send_data = 0;
     int sockfd;
     int header_byte_size = HEADER_BYTE_DEFAULT;
     int body_byte_size   = BODY_BYTE_DEFAULT;
@@ -55,7 +57,7 @@ int main(int argc, char *argv[])
         err(1, "prctl");
     }
 
-    while ( (c = getopt(argc, argv, "DB:H:R:hp:qs:")) != -1) {
+    while ( (c = getopt(argc, argv, "DB:H:NR:hp:qs:")) != -1) {
         switch (c) {
             case 'D':
                 use_nodelay = 1;
@@ -81,6 +83,9 @@ int main(int argc, char *argv[])
                 break;
             case 's':
                 sleep_usec = strtol(optarg, NULL, 0);
+                break;
+            case 'N':
+                dont_read_send_data = 1;
                 break;
             default:
                 break;
@@ -145,16 +150,18 @@ int main(int argc, char *argv[])
         }
         fprintfwt(stderr, "client: wrote body\n");
 
-        /**** read reply ****/
-        fprintfwt(stderr, "client: will read reply\n");
-        n = readn(sockfd, reply_buf, reply_byte_size);
-        if (n < 0) {
-            errx(1, "readn");
+        if (! dont_read_send_data) {
+            /**** read reply ****/
+            fprintfwt(stderr, "client: will read reply\n");
+            n = readn(sockfd, reply_buf, reply_byte_size);
+            if (n < 0) {
+                errx(1, "readn");
+            }
+            else if (n == 0) {
+                fprintfwt(stderr, "client: EOF\n");
+            }
+            fprintfwt(stderr, "client: got reply\n");
         }
-        else if (n == 0) {
-            fprintfwt(stderr, "client: EOF\n");
-        }
-        fprintfwt(stderr, "client: got reply\n");
 
         usleep(sleep_usec);
     }
