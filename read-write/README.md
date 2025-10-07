@@ -3,6 +3,11 @@
 TCP delayed ackとNagleアルゴリズムの相互作用による
 遅延の観測。
 
+クライアントが、headerとbodyをサーバーに送る。
+サーバーではheaderとbodyのふたつの情報がきたらデータを
+作ることができるようになり、作ったデータををreplyとして
+返すシステムを模擬してみる。
+
 ```
 クライアント                                 サーバー
 
@@ -15,6 +20,8 @@ header_byte_size (512) バイト ---->
 body_byte_size   (512) バイト ---->
                               <---- reply_byte_size (1448) バイト
 ```
+
+まず単純にheaderとbodyを2回write()するプログラムを作る。
 
 - クライアントはheaderとbodyをサーバーに送る。ここではそれぞれでwrite()する。
 - サーバーはheaderとbodyを読んだらreplyを1回write()する
