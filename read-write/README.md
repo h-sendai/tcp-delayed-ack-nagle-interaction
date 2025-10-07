@@ -78,6 +78,9 @@ tcpdumpのログ[tcpdump.txt](tcpdump.txt)
 ackが返るのに40ミリ秒かかっていて、ackを受信後、2個目の
 リクエストデータを送っていることが確認できる。
 
+プログラムのログとパケットキャプチャをまぜたログ
+[prog-packet.log.txt](prog-packet.log.txt)
+
 ## -D (nodelay), -q (quick ack)オプション
 
 server, clientともに-D (TCP_NODELAY)オプション、-q (TCP_QUICkACK)オプション
