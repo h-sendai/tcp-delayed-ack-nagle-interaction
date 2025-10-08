@@ -126,7 +126,7 @@ ip routeコマンドを使うと、ルート毎にquickackを設定すること�
 これで192.168.10.0/24からのパケットはTCP_QUICKACKオプションを付けることなしに
 quicack付きで読むことになる。
 この設定をしたPCでserverを動かし、他PCでclientを動かしたときのパケットキャプチャのログ:
-[ログ](log/packet-log.quickack-enabled-on-route)。
+[ログ](prog-net-log/packet-log.quickack-enabled-on-route)。
 この設定なしの場合はdelayed ackが発動し、headerパケットが到着後、
 40ミリ秒後にackがでるが、この設定をするとheaderパケット到着後、
 すぐにackを出していることがわかる。
@@ -169,4 +169,4 @@ delayed ackは生じない(1448バイトなのでNagleアルゴリズムで
 ```
 ./client -H 1448 -B 1448 -R 1448 サーバーIPアドレス
 ```
-(1448バイト時のプログラムログ+キャプチャログ)[log/1448.log]
+(1448バイト時のプログラムログ+キャプチャログ)[prog-net-log/1448.log]
