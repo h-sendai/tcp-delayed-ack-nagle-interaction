@@ -105,6 +105,32 @@ delayed ackとNagleアルゴリズムの相互作用が生じているからで�
 2. サーバー側でheaderを読んだら即座にackを返すためにquickackを使う(クライアント側はオプションなしに./client remote_hostで起動、サーバ側は./server -qでquickackを使うように起動する(サーバ側でheaderを読んだあとすぐにackを返すようになるので、クライアント側でNagleモードにはいっているのがackの受信で解消され、すぐにbodyを送ることができるようになる)
 3. サーバー側はオプションなしに起動(./server)し、クライアント側はTCP_NODELAYを指定する(./client -D remote_host) (headerとbodyが連続して送信され、サーバー側はheaderとbodyがきたのでリプライを返すことができるようになる)
 
+### ip route quickack
+
+ip routeコマンドを使うと、ルート毎にquickackを設定することができる。
+たとえば192.168.10.200のIPアドレスが付いているNIC enp6s0が
+あったとしてip route changeコマンドを実行する。
+
+```
+# ip route show
+(略)
+192.168.10.0/24 dev enp6s0 proto kernel scope link src 192.168.10.200 metric 100 
+
+# ip route change 192.168.10.0/24 dev enp6s0 proto kernel scope link src 192.168.10.200 metric 100 quickack 1
+
+# ip route show
+(略)
+192.168.10.0/24 dev enp6s0 proto kernel scope link src 192.168.10.200 metric 100 quickack 1
+```
+
+これで192.168.10.0/24からのパケットはTCP_QUICKACKオプションを付けることなしに
+quicack付きで読むことになる。
+この設定をしたPCでserverを動かし、他PCでclientを動かしたときのパケットキャプチャのログ:
+[ログ](packet-log.quickack-enabled-on-route)。
+この設定なしの場合はdelayed ackが発動し、headerパケットが到着後、
+40ミリ秒後にackがでるが、この設定をするとheaderパケット到着後、
+すぐにackを出していることがわかる。
+
 ## Delayed Ackを有効化するトリガー ???
 
 上の例をみると1回めのheader, body, replyの受け取りはディレイなしに
