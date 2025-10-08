@@ -1,0 +1,127 @@
+0.000000       0 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [S], seq 4247223531, win 64240, options [mss 1460,sackOK,TS val 1390581479 ecr 0,nop,wscale 9], length 0
+0.000154     154 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [S.], seq 3007712737, ack 4247223532, win 65160, options [mss 1460,sackOK,TS val 2099190832 ecr 1390581479,nop,wscale 7], length 0
+0.000242      88 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 1, win 126, options [nop,nop,TS val 1390581479 ecr 2099190832], length 0
+0.000336      93 client: will write header
+0.000526     190 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 1:1449, ack 1, win 126, options [nop,nop,TS val 1390581479 ecr 2099190832], length 1448
+0.000550      23 client: wrote header
+0.000561      11 client: will write body
+0.000580      18 client: wrote body
+0.000588       8 client: will read reply
+0.000633      45 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 1449:2897, ack 1, win 126, options [nop,nop,TS val 1390581479 ecr 2099190832], length 1448
+0.000725      91 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 1449, win 524, options [nop,nop,TS val 2099190833 ecr 1390581479], length 0
+0.000812      87 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 2897, win 546, options [nop,nop,TS val 2099190833 ecr 1390581479], length 0
+0.000812       0 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 1:1449, ack 2897, win 546, options [nop,nop,TS val 2099190833 ecr 1390581479], length 1448
+0.000853      40 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 1449, win 131, options [nop,nop,TS val 1390581479 ecr 2099190833], length 0
+0.000865      12 client: got reply
+1.001015 1000149 client: will write header
+1.001122     106 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 2897:4345, ack 1449, win 131, options [nop,nop,TS val 1390582480 ecr 2099190833], length 1448
+1.001148      26 client: wrote header
+1.001159      10 client: will write body
+1.001169      10 client: wrote body
+1.001177       7 client: will read reply
+1.001331     154 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 4345, win 569, options [nop,nop,TS val 2099191833 ecr 1390582480], length 0
+1.001424      93 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 4345:5793, ack 1449, win 131, options [nop,nop,TS val 1390582480 ecr 2099191833], length 1448
+1.001568     143 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 5793, win 592, options [nop,nop,TS val 2099191834 ecr 1390582480], length 0
+1.001657      89 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 1449:2897, ack 5793, win 592, options [nop,nop,TS val 2099191834 ecr 1390582480], length 1448
+1.001689      31 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 2897, win 137, options [nop,nop,TS val 1390582480 ecr 2099191834], length 0
+1.001767      78 client: got reply
+2.001959 1000191 client: will write header
+2.002066     106 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 5793:7241, ack 2897, win 137, options [nop,nop,TS val 1390583481 ecr 2099191834], length 1448
+2.002094      28 client: wrote header
+2.002105      10 client: will write body
+2.002115      10 client: wrote body
+2.002123       7 client: will read reply
+2.002292     168 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 7241, win 614, options [nop,nop,TS val 2099192834 ecr 1390583481], length 0
+2.002365      73 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 7241:8689, ack 2897, win 137, options [nop,nop,TS val 1390583481 ecr 2099192834], length 1448
+2.002535     169 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 8689, win 637, options [nop,nop,TS val 2099192835 ecr 1390583481], length 0
+2.002535       0 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 2897:4345, ack 8689, win 637, options [nop,nop,TS val 2099192835 ecr 1390583481], length 1448
+2.002605      70 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 4345, win 143, options [nop,nop,TS val 1390583481 ecr 2099192835], length 0
+2.002688      82 client: got reply
+3.002911 1000223 client: will write header
+3.003055     143 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 8689:10137, ack 4345, win 143, options [nop,nop,TS val 1390584482 ecr 2099192835], length 1448
+3.003081      26 client: wrote header
+3.003091       9 client: will write body
+3.003101      10 client: wrote body
+3.003106       4 client: will read reply
+3.003272     166 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 10137, win 649, options [nop,nop,TS val 2099193835 ecr 1390584482], length 0
+3.003345      72 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 10137:11585, ack 4345, win 143, options [nop,nop,TS val 1390584482 ecr 2099193835], length 1448
+3.003481     136 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 11585, win 649, options [nop,nop,TS val 2099193836 ecr 1390584482], length 0
+3.003559      77 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 4345:5793, ack 11585, win 649, options [nop,nop,TS val 2099193836 ecr 1390584482], length 1448
+3.003592      33 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 5793, win 148, options [nop,nop,TS val 1390584482 ecr 2099193836], length 0
+3.003661      69 client: got reply
+4.003843 1000181 client: will write header
+4.003985     142 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 11585:13033, ack 5793, win 148, options [nop,nop,TS val 1390585482 ecr 2099193836], length 1448
+4.004012      26 client: wrote header
+4.004023      11 client: will write body
+4.004033       9 client: wrote body
+4.004038       5 client: will read reply
+4.004192     154 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 13033, win 649, options [nop,nop,TS val 2099194836 ecr 1390585482], length 0
+4.004263      71 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 13033:14481, ack 5793, win 148, options [nop,nop,TS val 1390585483 ecr 2099194836], length 1448
+4.004422     158 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 14481, win 649, options [nop,nop,TS val 2099194837 ecr 1390585483], length 0
+4.004572     149 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 5793:7241, ack 14481, win 649, options [nop,nop,TS val 2099194837 ecr 1390585483], length 1448
+4.004620      48 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 7241, win 154, options [nop,nop,TS val 1390585483 ecr 2099194837], length 0
+4.004694      74 client: got reply
+5.004900 1000205 client: will write header
+5.005056     156 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 14481:15929, ack 7241, win 154, options [nop,nop,TS val 1390586484 ecr 2099194837], length 1448
+5.005087      30 client: wrote header
+5.005097      10 client: will write body
+5.005107       9 client: wrote body
+5.005113       6 client: will read reply
+5.005297     184 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 15929, win 649, options [nop,nop,TS val 2099195837 ecr 1390586484], length 0
+5.005372      74 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 15929:17377, ack 7241, win 154, options [nop,nop,TS val 1390586484 ecr 2099195837], length 1448
+5.005519     146 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 17377, win 649, options [nop,nop,TS val 2099195838 ecr 1390586484], length 0
+5.005611      92 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 7241:8689, ack 17377, win 649, options [nop,nop,TS val 2099195838 ecr 1390586484], length 1448
+5.005645      33 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 8689, win 160, options [nop,nop,TS val 1390586484 ecr 2099195838], length 0
+5.005716      71 client: got reply
+6.005911 1000195 client: will write header
+6.006074     162 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 17377:18825, ack 8689, win 160, options [nop,nop,TS val 1390587485 ecr 2099195838], length 1448
+6.006101      27 client: wrote header
+6.006111      10 client: will write body
+6.006121       9 client: wrote body
+6.006126       5 client: will read reply
+6.006253     126 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 18825, win 649, options [nop,nop,TS val 2099196838 ecr 1390587485], length 0
+6.006353      99 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 18825:20273, ack 8689, win 160, options [nop,nop,TS val 1390587485 ecr 2099196838], length 1448
+6.006519     166 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 20273, win 649, options [nop,nop,TS val 2099196839 ecr 1390587485], length 0
+6.006709     189 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 8689:10137, ack 20273, win 649, options [nop,nop,TS val 2099196839 ecr 1390587485], length 1448
+6.006766      56 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 10137, win 165, options [nop,nop,TS val 1390587485 ecr 2099196839], length 0
+6.006828      61 client: got reply
+7.007012 1000184 client: will write header
+7.007120     108 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 20273:21721, ack 10137, win 165, options [nop,nop,TS val 1390588486 ecr 2099196839], length 1448
+7.007149      28 client: wrote header
+7.007159      10 client: will write body
+7.007169       9 client: wrote body
+7.007177       8 client: will read reply
+7.007335     158 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 21721, win 649, options [nop,nop,TS val 2099197839 ecr 1390588486], length 0
+7.007412      76 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 21721:23169, ack 10137, win 165, options [nop,nop,TS val 1390588486 ecr 2099197839], length 1448
+7.007563     151 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 23169, win 649, options [nop,nop,TS val 2099197840 ecr 1390588486], length 0
+7.007663      99 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 10137:11585, ack 23169, win 649, options [nop,nop,TS val 2099197840 ecr 1390588486], length 1448
+7.007698      35 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 11585, win 168, options [nop,nop,TS val 1390588486 ecr 2099197840], length 0
+7.007769      71 client: got reply
+8.007987 1000217 client: will write header
+8.008095     108 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 23169:24617, ack 11585, win 168, options [nop,nop,TS val 1390589487 ecr 2099197840], length 1448
+8.008123      28 client: wrote header
+8.008133      10 client: will write body
+8.008147      13 client: wrote body
+8.008155       8 client: will read reply
+8.008342     186 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 24617, win 649, options [nop,nop,TS val 2099198840 ecr 1390589487], length 0
+8.008414      72 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 24617:26065, ack 11585, win 168, options [nop,nop,TS val 1390589487 ecr 2099198840], length 1448
+8.008561     146 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 26065, win 649, options [nop,nop,TS val 2099198841 ecr 1390589487], length 0
+8.008723     161 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 11585:13033, ack 26065, win 649, options [nop,nop,TS val 2099198841 ecr 1390589487], length 1448
+8.008771      48 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 13033, win 168, options [nop,nop,TS val 1390589487 ecr 2099198841], length 0
+8.008836      65 client: got reply
+9.009040 1000203 client: will write header
+9.009169     129 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 26065:27513, ack 13033, win 168, options [nop,nop,TS val 1390590488 ecr 2099198841], length 1448
+9.009196      27 client: wrote header
+9.009207      11 client: will write body
+9.009218      10 client: wrote body
+9.009229      11 client: will read reply
+9.009372     142 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 27513, win 649, options [nop,nop,TS val 2099199841 ecr 1390590488], length 0
+9.009471      98 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [P.], seq 27513:28961, ack 13033, win 168, options [nop,nop,TS val 1390590488 ecr 2099199841], length 1448
+9.009619     147 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 28961, win 649, options [nop,nop,TS val 2099199842 ecr 1390590488], length 0
+9.009706      87 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [P.], seq 13033:14481, ack 28961, win 649, options [nop,nop,TS val 2099199842 ecr 1390590488], length 1448
+9.009738      32 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 14481, win 168, options [nop,nop,TS val 1390590488 ecr 2099199842], length 0
+9.009815      76 client: got reply
+9.730731  720916 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [F.], seq 28961, ack 14481, win 168, options [nop,nop,TS val 1390591209 ecr 2099199842], length 0
+9.730918     186 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [.], ack 28962, win 649, options [nop,nop,TS val 2099200563 ecr 1390591209], length 0
+9.730919       1 IP 192.168.10.200.1234 > 192.168.10.216.47662: Flags [F.], seq 14481, ack 28962, win 649, options [nop,nop,TS val 2099200563 ecr 1390591209], length 0
+9.731043     123 IP 192.168.10.216.47662 > 192.168.10.200.1234: Flags [.], ack 14482, win 168, options [nop,nop,TS val 1390591210 ecr 2099200563], length 0
