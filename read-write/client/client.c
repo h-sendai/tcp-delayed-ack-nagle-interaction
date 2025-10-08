@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     int port = 1234;
     int sleep_usec = 1000000;
     int use_nodelay = 0;
-    int dont_read_send_data = 0;
+    int dont_read_reply = 0;
     int sockfd;
     int header_byte_size = HEADER_BYTE_DEFAULT;
     int body_byte_size   = BODY_BYTE_DEFAULT;
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
                 sleep_usec = strtol(optarg, NULL, 0);
                 break;
             case 'N':
-                dont_read_send_data = 1;
+                dont_read_reply = 1;
                 break;
             default:
                 break;
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
         }
         fprintfwt(stderr, "client: wrote body\n");
 
-        if (! dont_read_send_data) {
+        if (! dont_read_reply) {
             /**** read reply ****/
             fprintfwt(stderr, "client: will read reply\n");
             n = readn(sockfd, reply_buf, reply_byte_size);

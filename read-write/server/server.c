@@ -21,7 +21,7 @@ int debug = 0;
 int use_quick_ack = 0; /* global var to use in readn.c */
 int set_so_sndbuf_size = 0;
 volatile sig_atomic_t has_usr1 = 0;
-int dont_send_read_data = 0;
+int dont_send_reply = 0;
 
 int child_proc(int connfd, int header_byte_size, int body_byte_size, int reply_byte_size, int use_no_delay, int use_quick_ack)
 {
@@ -76,7 +76,7 @@ int child_proc(int connfd, int header_byte_size, int body_byte_size, int reply_b
         }
         fprintfwt(stderr, "server: read body packet\n");
 
-        if (! dont_send_read_data) {
+        if (! dont_send_reply) {
             /**** write reply packet ****/
             n = write(connfd, reply_buf, reply_byte_size);
             if (n < 0) {
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
                 port = strtol(optarg, NULL, 0);
                 break;
             case 'N':
-                dont_send_read_data = 1;
+                dont_send_reply = 1;
                 break;
             default:
                 break;
