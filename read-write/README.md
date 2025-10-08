@@ -154,6 +154,23 @@ serverがdelayed ackでackを返すということはなかった。
 ひとつは成立しないということだろうか（送られてきたデータを
 あまり読まないのでackを出す間隔が短くなるということはある。）
 
+ここではheader, bodyと2個のデータを送るとdelayed ackが
+起こることをみたが、
+
+```
+クライアント                                 サーバー
+
+header_byte_size (512) バイト ---->
+                              <---- reply_byte_size (1448) バイト
+
+(スリープusleep_sec秒)
+header_byte_size (512) バイト ---->
+                              <---- reply_byte_size (1448) バイト
+```
+
+のようにクライアントから送るパケットが1個だとdelayed ackは
+起こらない。
+
 ## データサイズをMSSにする
 
 上の例ではheader,body,replyともにMSS未満のものだったが
