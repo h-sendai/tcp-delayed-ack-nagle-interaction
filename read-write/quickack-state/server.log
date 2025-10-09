@@ -1,0 +1,19 @@
+0.000752       0 server: pid: 91819
+0.000959     207 server: (info) quickack enabled (not specified in commandline)
+0.000984      25 server: read header packet
+0.000993       8 server: (info) quickack enabled (not specified in commandline)
+0.001004      11 server: read body packet
+0.001187     182 server: wrote reply packet
+1.001743 1000555 server: read header packet
+1.042325   40582 server: read body packet
+1.042439     114 server: wrote reply packet
+2.042961 1000521 server: read header packet
+2.083393   40432 server: read body packet
+2.083527     134 server: wrote reply packet
+3.084122 1000594 server: read header packet
+3.124337   40215 server: read body packet
+3.124509     172 server: wrote reply packet
+4.124957 1000447 server: read header packet
+4.165319   40361 server: read body packet
+4.165439     120 server: wrote reply packet
+5.098333  932893 server: read EOF

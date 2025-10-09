@@ -88,6 +88,19 @@ ackが返るのに40ミリ秒かかっていて、ackを受信後、2個目の
 プログラムのログとパケットキャプチャをまぜたログ
 [prog-packet.log.txt](prog-packet.log.txt)
 
+server側で2回目以降から40m秒のdelayed ackになるというのが
+気になる。``server -v``と``client -v``というオプションを付けて
+TCP_QUICKACKが有効になっているかどうか調べて有効になっていたら
+そのむね表示するようにしてみた。
+
+- [サーバーのログ](quickack-state/server.log)
+- [クライアントのログ](quickack-state/client.log)
+
+コマンドラインでquickackの設定は指定していないが
+サーバー側は最初の2回のread()でTCP_QUICKACKオプションが
+有効化されていることがわかる。クライアント側はいつも
+有効化されている。
+
 ## -D (nodelay), -q (quick ack)オプション
 
 server, clientともに-D (TCP_NODELAY)オプション、-q (TCP_QUICkACK)オプション

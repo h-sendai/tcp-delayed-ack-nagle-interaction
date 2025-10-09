@@ -1,0 +1,35 @@
+0.000000       0 client: will write header
+0.000222     222 client: wrote header
+0.000242      19 client: will write body
+0.000286      44 client: wrote body
+0.000301      14 client: will read reply
+0.000317      16 client: (info) quickack enabled (not specified in commandline)
+0.001230     912 client: got reply
+1.001477 1000247 client: will write header
+1.001656     178 client: wrote header
+1.001673      16 client: will write body
+1.001692      19 client: wrote body
+1.001703      10 client: will read reply
+1.001717      13 client: (info) quickack enabled (not specified in commandline)
+1.042487   40769 client: got reply
+2.042697 1000210 client: will write header
+2.042880     182 client: wrote header
+2.042895      14 client: will write body
+2.042907      12 client: wrote body
+2.042915       8 client: will read reply
+2.042928      12 client: (info) quickack enabled (not specified in commandline)
+2.083590   40661 client: got reply
+3.083808 1000218 client: will write header
+3.083992     183 client: wrote header
+3.084008      16 client: will write body
+3.084020      11 client: wrote body
+3.084029       9 client: will read reply
+3.084042      12 client: (info) quickack enabled (not specified in commandline)
+3.124588   40545 client: got reply
+4.124736 1000148 client: will write header
+4.124873     136 client: wrote header
+4.124889      15 client: will write body
+4.124903      14 client: wrote body
+4.124912       8 client: will read reply
+4.124924      12 client: (info) quickack enabled (not specified in commandline)
+4.165509   40585 client: got reply
