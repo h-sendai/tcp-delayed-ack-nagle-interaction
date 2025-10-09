@@ -15,7 +15,7 @@ readn(int fd, void *vptr, size_t n)
 	while (nleft > 0) {
 #ifdef __linux__
         if (use_quick_ack) {
-            if (set_so_quickack(fd) < 0) {
+            if (set_so_quickack(fd, 1) < 0) {
                 exit(1);
             }
         }
