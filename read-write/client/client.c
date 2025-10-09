@@ -19,6 +19,7 @@
 #define REPLY_BYTE_DEFEULT  1448
 
 int use_quick_ack = 0; /* global var to use in readn.c */
+int verbose       = 0; /* gloval var to use in readn.c */
 
 int usage()
 {
@@ -32,7 +33,9 @@ int usage()
                  "-B N    body byte size   (default: 512)\n"
                  "-R N    reply byte size  (default: 1448)\n"
                  "-p PORT port number (default: 1234)\n"
+                 "-q      set quickack TCP option on every read()\n"
                  "-N      don't read reply (send header and body only) Use with server -N.\n"
+                 "-v      Verbose (print if quickack is enabled and no -q)\n"
                  "-h      display this help\n";
 
     fprintf(stderr, "%s", msg);
@@ -57,7 +60,7 @@ int main(int argc, char *argv[])
         err(1, "prctl");
     }
 
-    while ( (c = getopt(argc, argv, "DB:H:NR:hp:qs:")) != -1) {
+    while ( (c = getopt(argc, argv, "DB:H:NR:hp:qs:v")) != -1) {
         switch (c) {
             case 'D':
                 use_nodelay = 1;
@@ -86,6 +89,9 @@ int main(int argc, char *argv[])
                 break;
             case 'N':
                 dont_read_reply = 1;
+                break;
+            case 'v':
+                verbose = 1;
                 break;
             default:
                 break;

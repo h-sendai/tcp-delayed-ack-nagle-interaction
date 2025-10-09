@@ -1,7 +1,9 @@
 #include "readn.h"
 #include "my_socket.h"
+#include "logUtil.h"
 
 extern int use_quick_ack;
+extern int verbose;
 
 ssize_t						/* Read "n" bytes from a descriptor. */
 readn(int fd, void *vptr, size_t n)
@@ -17,6 +19,12 @@ readn(int fd, void *vptr, size_t n)
         if (use_quick_ack) {
             if (set_so_quickack(fd, 1) < 0) {
                 exit(1);
+            }
+        }
+        if (verbose && (! use_quick_ack)) {
+            int quickack_state = get_so_quickack(fd);
+            if (quickack_state == 1) {
+                fprintfwt(stderr, "client: (info) quickack enabled (not specified in commandline)\n");
             }
         }
 #endif

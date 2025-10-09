@@ -18,6 +18,7 @@
 #define REPLY_BYTE_DEFEULT  1448
 
 int use_quick_ack = 0; /* global var to use in readn.c */
+int verbose       = 0;
 
 int usage()
 {
@@ -31,6 +32,7 @@ int usage()
                  "-B N    body byte size   (default: 512)\n"
                  "-R N    reply byte size  (default: 1448)\n"
                  "-p PORT port number (default: 1234)\n"
+                 "-v      verbose\n"
                  "-h      display this help\n";
 
     fprintf(stderr, "%s", msg);
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
     int body_byte_size   = BODY_BYTE_DEFAULT;
     int reply_byte_size  = REPLY_BYTE_DEFEULT;
 
-    while ( (c = getopt(argc, argv, "D:B:H:R:hp:s:")) != -1) {
+    while ( (c = getopt(argc, argv, "D:B:H:R:hp:s:v")) != -1) {
         switch (c) {
             case 'D':
                 use_nodelay = 1;
@@ -73,6 +75,9 @@ int main(int argc, char *argv[])
                 break;
             case 's':
                 sleep_usec = strtol(optarg, NULL, 0);
+                break;
+            case 'v':
+                verbose = 1;
                 break;
             default:
                 break;

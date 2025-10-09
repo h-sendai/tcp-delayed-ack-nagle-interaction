@@ -19,6 +19,7 @@
 
 int debug = 0;
 int use_quick_ack = 0; /* global var to use in readn.c */
+int verbose = 0;       /* global var to use in readn.c */
 int set_so_sndbuf_size = 0;
 volatile sig_atomic_t has_usr1 = 0;
 int dont_send_reply = 0;
@@ -133,7 +134,7 @@ int main(int argc, char *argv[])
     int reply_byte_size   = REPLY_BYTE_DEFAULT;
 
     int c;
-    while ( (c = getopt(argc, argv, "DqH:B:NR:dhp:")) != -1) {
+    while ( (c = getopt(argc, argv, "DqH:B:NR:dhp:v")) != -1) {
         switch (c) {
             case 'D':
                 use_no_delay = 1;
@@ -161,6 +162,9 @@ int main(int argc, char *argv[])
                 break;
             case 'N':
                 dont_send_reply = 1;
+                break;
+            case 'v':
+                verbose = 1;
                 break;
             default:
                 break;
