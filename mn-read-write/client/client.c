@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         err(1, "prctl");
     }
 
-    while ( (c = getopt(argc, argv, "DB:H:NR:hp:qs:m:n::v")) != -1) {
+    while ( (c = getopt(argc, argv, "DB:H:NR:hp:qs:m:n:v")) != -1) {
         switch (c) {
             case 'D':
                 use_nodelay = 1;
