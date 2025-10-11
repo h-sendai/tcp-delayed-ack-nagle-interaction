@@ -1,0 +1,209 @@
+#include <sys/time.h>
+
+#include <err.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#include "my_signal.h"
+#include "my_socket.h"
+#include "logUtil.h"
+#include "readn.h"
+#include "get_num.h"
+
+#define HEADER_BYTE_DEFAULT  512
+#define BODY_BYTE_DEFAULT    512
+#define REPLY_BYTE_DEFAULT  1448
+
+int debug = 0;
+int use_quick_ack = 0; /* global var to use in readn.c */
+int verbose = 0;       /* global var to use in readn.c */
+int set_so_sndbuf_size = 0;
+volatile sig_atomic_t has_usr1 = 0;
+int dont_send_reply = 0;
+
+int child_proc(int connfd, int header_byte_size, int body_byte_size, int reply_byte_size, int use_no_delay, int use_quick_ack, int n_request, int n_reply)
+{
+    int n;
+    
+    char *header_buf = malloc(header_byte_size);
+    if (header_buf == NULL) {
+        err(1, "malloc for request_buf");
+    }
+    char *body_buf = malloc(body_byte_size);
+    if (body_buf == NULL) {
+        err(1, "malloc for body_buf");
+    }
+    char *reply_buf = malloc(reply_byte_size);
+    if (reply_buf == NULL) {
+        err(1, "malloc for reply_buf");
+    }
+
+    if (use_no_delay) {
+        fprintfwt(stderr, "use_no_delay\n");
+        set_so_nodelay(connfd);
+    }
+
+    if (use_quick_ack) {
+        fprintfwt(stderr, "use_quick_ack\n");
+        //we have to set_so_quickack() just before read()
+    }
+
+    pid_t pid = getpid();
+    fprintfwt(stderr, "server: pid: %d\n", pid);
+
+    for ( ; ; ) {
+        /**** read request packet ****/
+        for (int i = 0; i < n_request; ++i) {
+            n = readn(connfd, header_buf, header_byte_size);
+            if (n < 0) {
+                err(1, "readn");
+            }
+            else if (n == 0) {
+                fprintfwt(stderr, "server: read EOF\n");
+                exit(0);
+            }
+            fprintfwt(stderr, "server: read request packet (%d / %d)\n", i + 1, n_request);
+        }
+
+        /**** send reply packet ****/
+        for (int i = 0; i < n_reply; ++i) {
+            n = write(connfd, reply_buf, reply_byte_size);
+            if (n < 0) {
+                fprintfwt(stderr, "server: %s\n", strerror(errno));
+                exit(0);
+            }
+            fprintfwt(stderr, "server: wrote reply packet (%d / %d)\n", i + 1, n_reply);
+        }
+    }
+
+    return 0;
+}
+
+void sig_chld(int signo)
+{
+    pid_t pid;
+    int   stat;
+
+    while ( (pid = waitpid(-1, &stat, WNOHANG)) > 0) {
+        ;
+    }
+    return;
+}
+
+int usage(void)
+{
+    char *msg =
+"Usage: server\n"
+"-D      use TCP_NODELAY socket option\n"
+"-H N    header byte size (default: 512)\n"
+"-B N    body byte size   (default: 512)\n"
+"-R N    reply byte size  (default: 1024)\n"
+"-p port port number (1234)\n"
+"-N      dont send reply packet.  Use with client -N (dont read reply)\n"
+"-m N    Number of request (default: 2)\n"
+"-n N    Number of reply (default: 1)\n"
+"-q      enable quick ack\n";
+
+    fprintf(stderr, "%s", msg);
+
+    return 0;
+}
+
+
+int main(int argc, char *argv[])
+{
+    int port = 1234;
+    pid_t pid;
+    struct sockaddr_in remote;
+    socklen_t addr_len = sizeof(struct sockaddr_in);
+    int listenfd;
+    int n_request = 2;
+    int n_reply   = 1;
+
+    int use_no_delay      = 0;
+    int header_byte_size  = HEADER_BYTE_DEFAULT;
+    int body_byte_size    = BODY_BYTE_DEFAULT;
+    int reply_byte_size   = REPLY_BYTE_DEFAULT;
+
+    int c;
+    while ( (c = getopt(argc, argv, "DqH:B:NR:dhp:m:n:v")) != -1) {
+        switch (c) {
+            case 'D':
+                use_no_delay = 1;
+                break;
+            case 'q':
+                use_quick_ack = 1;
+                break;
+            case 'H':
+                header_byte_size = get_num(optarg);
+                break;
+            case 'B':
+                body_byte_size = get_num(optarg);
+                break;
+            case 'R':
+                reply_byte_size = get_num(optarg);
+                break;
+            case 'd':
+                debug += 1;
+                break;
+            case 'h':
+                usage();
+                exit(0);
+            case 'p':
+                port = strtol(optarg, NULL, 0);
+                break;
+            case 'N':
+                dont_send_reply = 1;
+                break;
+            case 'm':
+                n_request = strtol(optarg, NULL, 0);
+                break;
+            case 'n':
+                n_reply = strtol(optarg, NULL, 0);
+                break;
+            case 'v':
+                verbose = 1;
+                break;
+            default:
+                break;
+        }
+    }
+    argc -= optind;
+    argv += optind;
+
+    my_signal(SIGCHLD, sig_chld);
+    my_signal(SIGPIPE, SIG_IGN);
+
+    listenfd = tcp_listen(port);
+    if (listenfd < 0) {
+        errx(1, "tcp_listen");
+    }
+
+    for ( ; ; ) {
+        int connfd = accept(listenfd, (struct sockaddr *)&remote, &addr_len);
+        if (connfd < 0) {
+            err(1, "accept");
+        }
+        
+        pid = fork();
+        if (pid == 0) { //child
+            if (close(listenfd) < 0) {
+                err(1, "close listenfd");
+            }
+            if (child_proc(connfd, header_byte_size, body_byte_size, reply_byte_size, use_no_delay, use_quick_ack, n_request, n_reply) < 0) {
+                errx(1, "child_proc");
+            }
+            exit(0);
+        }
+        else { // parent
+            if (close(connfd) < 0) {
+                err(1, "close for accept socket of parent");
+            }
+        }
+    }
+        
+    return 0;
+}
