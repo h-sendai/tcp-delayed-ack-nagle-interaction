@@ -1,3 +1,4 @@
+SUBDIRS += mn-read-write
 SUBDIRS += read-write
 SUBDIRS += writev
 
