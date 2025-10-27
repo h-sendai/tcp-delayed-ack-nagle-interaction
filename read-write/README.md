@@ -3,6 +3,13 @@
 TCP delayed ackとNagleアルゴリズムの相互作用による
 遅延の観測。
 
+delayed ackのカウンタは/proc/net/netstatにある。
+```
+netstat -s -t | grep delayed
+```
+でいままで送信したdelayed ackの回数が取得できる
+(netstatオプションの``-s``はstatstics, ``-t``はtcpの意味)。
+
 クライアントが、headerとbodyをサーバーに送る。
 サーバーではheaderとbodyのふたつの情報がきたらデータを
 作ることができるようになり、作ったデータををreplyとして
