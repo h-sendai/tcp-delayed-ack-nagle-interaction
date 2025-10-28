@@ -1,0 +1,30 @@
+15:22:30.702070 client: will write header
+15:22:30.702267 client: wrote header
+15:22:30.702285 client: will write body
+15:22:30.702329 client: wrote body
+15:22:30.702342 client: will read reply
+15:22:30.703277 client: got reply
+15:22:31.703544 client: will write header
+15:22:31.703889 client: wrote header
+15:22:31.703945 client: will write body
+15:22:31.703971 client: wrote body
+15:22:31.703977 client: will read reply
+15:22:31.745234 client: got reply
+15:22:32.745440 client: will write header
+15:22:32.745604 client: wrote header
+15:22:32.745615 client: will write body
+15:22:32.745624 client: wrote body
+15:22:32.745633 client: will read reply
+15:22:32.786399 client: got reply
+15:22:33.786594 client: will write header
+15:22:33.786819 client: wrote header
+15:22:33.786830 client: will write body
+15:22:33.786839 client: wrote body
+15:22:33.786845 client: will read reply
+15:22:33.828212 client: got reply
+15:22:34.828408 client: will write header
+15:22:34.828568 client: wrote header
+15:22:34.828578 client: will write body
+15:22:34.828587 client: wrote body
+15:22:34.828595 client: will read reply
+15:22:34.869346 client: got reply
